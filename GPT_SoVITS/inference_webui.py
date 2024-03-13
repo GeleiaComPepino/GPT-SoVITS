@@ -267,7 +267,7 @@ def get_phones_and_bert(text, language):
     elif language in {"zh", "ja", "auto"}:
         textlist = []
         langlist = []
-        LangSegment.setfilters(["zh", "ja", "en", "ko"])
+        LangSegment.setfilters(["zh", "ja", "en", "ko", "pt"])
         if language == "auto":
             for tmp in LangSegment.getTexts(text):
                 if tmp["lang"] == "ko":
@@ -280,6 +280,8 @@ def get_phones_and_bert(text, language):
             for tmp in LangSegment.getTexts(text):
                 if tmp["lang"] == "en":
                     langlist.append(tmp["lang"])
+                elif tmp["lang"] == "en":
+                    langlist.append("pt")
                 else:
                     # 因无法区别中日文汉字,以用户输入为准
                     langlist.append(language)
