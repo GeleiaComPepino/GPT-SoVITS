@@ -205,7 +205,7 @@ dict_language = {
     i18n("日文"): "all_ja",#全部按日文识别
     i18n("中英混合"): "zh",#按中英混合识别####不变
     i18n("日英混合"): "ja",#按日英混合识别####不变
-    i18n("葡萄牙人"): "br",#按日英混合识别####不变
+    i18n("葡萄牙人"): "pt",#按日英混合识别####不变
     i18n("多语种混合"): "auto",#多语种启动切分识别语种
 }
 
@@ -242,12 +242,12 @@ def get_phones_and_bert(text, language):
     dtype = torch.float16 if is_half else torch.float32
     phones = None  # Initialize phones variable
 
-    if language in {"en", "all_zh", "all_ja", "br"}:
+    if language in {"en", "all_zh", "all_ja", "pt"}:
         language = language.replace("all_", "")
         if language == "en":
             LangSegment.setfilters(["en"])
             formattext = " ".join(tmp["text"] for tmp in LangSegment.getTexts(text))
-        elif language == "br":
+        elif language == "pt":
             LangSegment.setfilters(["pt"])
             formattext = " ".join(tmp["text"] for tmp in LangSegment.getTexts(text))
         else:
@@ -280,7 +280,7 @@ def get_phones_and_bert(text, language):
             for tmp in LangSegment.getTexts(text):
                 if tmp["lang"] == "en":
                     langlist.append(tmp["lang"])
-                elif tmp["lang"] == "br":
+                elif tmp["lang"] == "pt":
                     langlist.append("pt")
                 else:
                     # 因无法区别中日文汉字,以用户输入为准
@@ -330,10 +330,10 @@ def get_tts_wav(ref_wav_path, prompt_text, prompt_language, text, text_language,
     text_language = dict_language[text_language]
     if not ref_free:
         prompt_text = prompt_text.strip("\n")
-        if (prompt_text[-1] not in splits): prompt_text += "。" if prompt_language != "en" or prompt_language != "br" or prompt_language != "pt" else "."
+        if (prompt_text[-1] not in splits): prompt_text += "。" if prompt_language != "en" or prompt_language != "pt" else "."
         print(i18n("实际输入的参考文本:"), prompt_text)
     text = text.strip("\n")
-    if (text[0] not in splits and len(get_first(text)) < 4): text = "。" + text if text_language != "en" or text_language != "br" or text_language != "pt" else "." + text
+    if (text[0] not in splits and len(get_first(text)) < 4): text = "。" + text if text_language != "en" or text_language != "pt" else "." + text
     
     print(i18n("实际输入的目标文本:"), text)
     zero_wav = np.zeros(
@@ -396,7 +396,7 @@ def get_tts_wav(ref_wav_path, prompt_text, prompt_language, text, text_language,
         # 解决输入目标文本的空行导致报错的问题
         if (len(text.strip()) == 0):
             continue
-        if (text[-1] not in splits): text += "。" if text_language != "en" or text_language != "br" or text_language != "pt" else "."
+        if (text[-1] not in splits): text += "。" if text_language != "en" or text_language != "pt" else "."
         print(i18n("实际输入的目标文本(每句):"), text)
         phones2,bert2,norm_text2=get_phones_and_bert(text, text_language)
         print(i18n("前端处理后的文本(每句):"), norm_text2)
