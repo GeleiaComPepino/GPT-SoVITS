@@ -224,7 +224,7 @@ def g2p(text):
 
 if __name__ == "__main__":
     # print(get_dict())
-    print(g2p("hello"))
+    print(g2p("hello, say my name"))
     print(g2p(","))
     # all_phones = set()
     # for k, syllables in eng_dict.items():

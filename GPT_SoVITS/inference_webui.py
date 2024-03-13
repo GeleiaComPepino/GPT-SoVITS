@@ -379,7 +379,7 @@ def get_tts_wav(ref_wav_path, prompt_text, prompt_language, text, text_language,
         text = cut5(text)
         print(text)
     elif (how_to_cut == i18n("葡萄牙人")):
-        text = cut5(text)
+        text = cut4(text)
         print(text)
     while "\n\n" in text:
         text = text.replace("\n\n", "\n")
