@@ -72,6 +72,9 @@ arpa_to_portuguese = {
     "SH": "ch",   # similar to the 'ch' in "chave" (key)
     "K": "c"
 }
+def text_normalize(text):
+    # todo: eng text normalize
+    return text.replace(";", ",")
 arpa_to_portuguese_inverted = {value: key for key, value in arpa_to_portuguese.items()}
 def g2p(word):
     translated_word = []

@@ -1,0 +1,1 @@
+SoVITS_weights/Obama_e8_s104.pth
