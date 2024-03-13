@@ -70,7 +70,11 @@ arpa_to_portuguese = {
     "OW0": "ô",   # similar to the 'ô' in "só" (alone)
     "L": "l",     # same as English
     "SH": "ch",   # similar to the 'ch' in "chave" (key)
-    "K": "c"
+    "K": "c",
+    "OW0": "o",
+    "OW0": "O",
+    "EH1": "e",
+    "AH1": "A"
 }
 def text_normalize(text):
     # todo: eng text normalize
@@ -83,6 +87,8 @@ def g2p(word):
         character = arpa_to_portuguese_inverted.get(phoneme, "")
         if character == '':
             translated_word.append(phoneme.upper())
+        elif character == '。' or character == ' ':
+            pass
         else:
             translated_word.append(character)
     return translated_word

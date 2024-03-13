@@ -26,6 +26,7 @@ def clean_text(text, language):
             assert ph in symbols
     elif language == "pt":
         phones = language_module.g2p(norm_text)
+        print(phones)
         word2ph = None
     else:
         phones = language_module.g2p(norm_text)
