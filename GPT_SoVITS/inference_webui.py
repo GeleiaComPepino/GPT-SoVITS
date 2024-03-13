@@ -280,7 +280,7 @@ def get_phones_and_bert(text, language):
             for tmp in LangSegment.getTexts(text):
                 if tmp["lang"] == "en":
                     langlist.append(tmp["lang"])
-                elif tmp["lang"] == "en":
+                elif tmp["lang"] == "br":
                     langlist.append("pt")
                 else:
                     # 因无法区别中日文汉字,以用户输入为准
@@ -333,7 +333,7 @@ def get_tts_wav(ref_wav_path, prompt_text, prompt_language, text, text_language,
         if (prompt_text[-1] not in splits): prompt_text += "。" if prompt_language != "en" else "."
         print(i18n("实际输入的参考文本:"), prompt_text)
     text = text.strip("\n")
-    if (text[0] not in splits and len(get_first(text)) < 4): text = "。" + text if text_language != "en" else "." + text
+    if (text[0] not in splits and len(get_first(text)) < 4): text = "。" + text if text_language != "en" or text_language != "br" else "." + text
     
     print(i18n("实际输入的目标文本:"), text)
     zero_wav = np.zeros(
@@ -372,6 +372,8 @@ def get_tts_wav(ref_wav_path, prompt_text, prompt_language, text, text_language,
     elif (how_to_cut == i18n("按英文句号.切")):
         text = cut4(text)
     elif (how_to_cut == i18n("按标点符号切")):
+        text = cut5(text)
+    elif (how_to_cut == i18n("葡萄牙人")):
         text = cut5(text)
     while "\n\n" in text:
         text = text.replace("\n\n", "\n")
