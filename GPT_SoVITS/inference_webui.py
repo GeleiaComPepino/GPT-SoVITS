@@ -237,9 +237,12 @@ def get_first(text):
     return text
 
 
-def get_phones_and_bert(text,language):
-    if language in {"en","all_zh","all_ja"}:
-        language = language.replace("all_","")
+def get_phones_and_bert(text, language):
+    dtype = torch.float16 if is_half else torch.float32
+    phones = None  # Initialize phones variable
+
+    if language in {"en", "all_zh", "all_ja"}:
+        language = language.replace("all_", "")
         if language == "en":
             LangSegment.setfilters(["en"])
             formattext = " ".join(tmp["text"] for tmp in LangSegment.getTexts(text))
@@ -248,18 +251,19 @@ def get_phones_and_bert(text,language):
             formattext = text
         while "  " in formattext:
             formattext = formattext.replace("  ", " ")
-        phones, word2ph, norm_text = clean_text_inf(formattext, language)
+        phones4, word2ph, norm_text = clean_text_inf(formattext, language)
         if language == "zh":
             bert = get_bert_feature(norm_text, word2ph).to(device)
         else:
             bert = torch.zeros(
-                (1024, len(phones)),
-                dtype=torch.float16 if is_half == True else torch.float32,
+                (1024, len(phones4)),
+                dtype=torch.float16 if is_half else torch.float32,
             ).to(device)
-    elif language in {"zh", "ja","auto"}:
-        textlist=[]
-        langlist=[]
-        LangSegment.setfilters(["zh","ja","en","ko"])
+        phones = phones4  # Assign phones variable
+    elif language in {"zh", "ja", "auto", "br"}:
+        textlist = []
+        langlist = []
+        LangSegment.setfilters(["zh", "ja", "en", "ko", "pt"])
         if language == "auto":
             for tmp in LangSegment.getTexts(text):
                 if tmp["lang"] == "ko":
@@ -292,7 +296,7 @@ def get_phones_and_bert(text,language):
         phones = sum(phones_list, [])
         norm_text = ''.join(norm_text_list)
 
-    return phones,bert.to(dtype),norm_text
+    return phones, bert.to(dtype), norm_text
 
 
 def merge_short_text_in_array(texts, threshold):
