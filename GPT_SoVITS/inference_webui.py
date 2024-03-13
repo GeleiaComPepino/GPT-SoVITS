@@ -45,6 +45,7 @@ bert_path = os.environ.get(
 )
 infer_ttswebui = os.environ.get("infer_ttswebui", 9872)
 infer_ttswebui = int(infer_ttswebui)
+print(infer_ttswebui)
 is_share = os.environ.get("is_share", "False")
 is_share = eval(is_share)
 if "_CUDA_VISIBLE_DEVICES" in os.environ:
@@ -279,7 +280,7 @@ def get_phones_and_bert(text, language):
                 else:
                     # 因无法区别中日文汉字,以用户输入为准
                     langlist.append(language)
-                textlist.append(tmp["text"])
+                    textlist.append(tmp["text"])
         print(textlist)
         print(langlist)
         phones_list = []
