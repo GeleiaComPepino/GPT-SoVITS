@@ -225,7 +225,7 @@ def g2p(text):
 if __name__ == "__main__":
     # print(get_dict())
     print(g2p("hello"))
-    print(g2p("In this; paper, we propose 1 DSPGAN, a GAN-based universal vocoder."))
+    print(g2p(","))
     # all_phones = set()
     # for k, syllables in eng_dict.items():
     #     for group in syllables:

@@ -1,6 +1,6 @@
-from text import chinese, japanese, cleaned_text_to_sequence, symbols, english
+from text import chinese, japanese, cleaned_text_to_sequence, symbols, english, portuguese
 
-language_module_map = {"zh": chinese, "ja": japanese, "en": english}
+language_module_map = {"zh": chinese, "ja": japanese, "en": english, "br": portuguese}
 special = [
     # ("%", "zh", "SP"),
     ("￥", "zh", "SP2"),
@@ -22,6 +22,9 @@ def clean_text(text, language):
         phones, word2ph = language_module.g2p(norm_text)
         assert len(phones) == sum(word2ph)
         assert len(norm_text) == len(word2ph)
+    elif language == "br":
+        phones = language_module.g2p(norm_text)
+        word2ph = None
     else:
         phones = language_module.g2p(norm_text)
         word2ph = None
@@ -55,4 +58,4 @@ def text_to_sequence(text, language):
 
 
 if __name__ == "__main__":
-    print(clean_text("你好%啊啊啊额、还是到付红四方。", "zh"))
+    print(clean_text("Poema do cume", "br"))

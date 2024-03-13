@@ -162,9 +162,7 @@ def text_normalize(text):
 
 
 if __name__ == "__main__":
-    text = "啊——但是《原神》是由,米哈\游自主，研发的一款全.新开放世界.冒险游戏"
-    text = "呣呣呣～就是…大人的鼹鼠党吧？"
-    text = "你好"
+    text = "寶"
     text = text_normalize(text)
     print(g2p(text))
 
