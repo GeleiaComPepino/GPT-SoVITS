@@ -27,3 +27,4 @@ LangSegment>=0.2.0
 Faster_Whisper
 epitran
 g2pk
+lingua-language-detector

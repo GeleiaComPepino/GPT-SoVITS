@@ -17,6 +17,7 @@ logging.getLogger("charset_normalizer").setLevel(logging.ERROR)
 logging.getLogger("torchaudio._extension").setLevel(logging.ERROR)
 import pdb
 import torch
+from lingua import Language, LanguageDetectorBuilder
 
 if os.path.exists("./gweight.txt"):
     with open("./gweight.txt", 'r', encoding="utf-8") as file:
@@ -241,15 +242,16 @@ def get_first(text):
 def get_phones_and_bert(text, language):
     dtype = torch.float16 if is_half else torch.float32
     phones = None  # Initialize phones variable
-
+    languages = [Language.ENGLISH, Language.PORTUGUESE, Language.CHINESE, Language.JAPANESE]
+    detector = LanguageDetectorBuilder.from_languages(*languages).build()
     if language in {"en", "all_zh", "all_ja", "pt"}:
         language = language.replace("all_", "")
         if language == "en":
-            LangSegment.setfilters(["en"])
-            formattext = " ".join(tmp["text"] for tmp in LangSegment.getTexts(text))
+            language = detector.detect_language_of(text).iso_code_639_1.name.lower()
+            formattext = text + ' '
         elif language == "pt":
-            LangSegment.setfilters(["pt"])
-            formattext = " ".join(tmp["text"] for tmp in LangSegment.getTexts(text))
+            language = detector.detect_language_of(text).iso_code_639_1.name.lower()
+            formattext = text + ' '
         else:
             # 因无法区别中日文汉字,以用户输入为准
             formattext = text
@@ -267,25 +269,27 @@ def get_phones_and_bert(text, language):
     elif language in {"zh", "ja", "auto"}:
         textlist = []
         langlist = []
-        LangSegment.setfilters(["zh", "ja", "en", "ko", "pt"])
+        languages = [Language.ENGLISH, Language.PORTUGUESE, Language.CHINESE, Language.JAPANESE, Language.KOREAN]
+        detector = LanguageDetectorBuilder.from_languages(*languages).build()
         if language == "auto":
-            for tmp in LangSegment.getTexts(text):
-                if tmp["lang"] == "ko":
-                    langlist.append("zh")
-                    textlist.append(tmp["text"])
-                else:
-                    langlist.append(tmp["lang"])
-                    textlist.append(tmp["text"])
+            language = detector.detect_language_of(text)
+            if language.iso_code_639_1.name.lower() == "ko":
+                langlist.append("zh")
+                textlist.append(text)
+            else:
+                langlist.append(language.iso_code_639_1.name.lower())
+                textlist.append(text)
         else:
-            for tmp in LangSegment.getTexts(text):
-                if tmp["lang"] == "en":
-                    langlist.append(tmp["lang"])
-                elif tmp["lang"] == "pt":
-                    langlist.append("pt")
-                else:
-                    # 因无法区别中日文汉字,以用户输入为准
-                    langlist.append(language)
-                    textlist.append(tmp["text"])
+            languages = [Language.ENGLISH, Language.PORTUGUESE]
+            detector = LanguageDetectorBuilder.from_languages(*languages).build()
+            if language.iso_code_639_1.name.lower() == "en":
+                langlist.append("en")
+            elif language.iso_code_639_1.name.lower() == "pt":
+                langlist.append("pt")
+            else:
+                # 因无法区别中日文汉字,以用户输入为准
+                langlist.append(language)
+                textlist.append(text)
         print(textlist)
         print(langlist)
         phones_list = []
