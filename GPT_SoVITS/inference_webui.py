@@ -330,7 +330,7 @@ def get_tts_wav(ref_wav_path, prompt_text, prompt_language, text, text_language,
     text_language = dict_language[text_language]
     if not ref_free:
         prompt_text = prompt_text.strip("\n")
-        if (prompt_text[-1] not in splits): prompt_text += "。" if prompt_language != "en" else "."
+        if (prompt_text[-1] not in splits): prompt_text += "。" if prompt_language != "en" or text_language != "br" else "."
         print(i18n("实际输入的参考文本:"), prompt_text)
     text = text.strip("\n")
     if (text[0] not in splits and len(get_first(text)) < 4): text = "。" + text if text_language != "en" or text_language != "br" else "." + text
@@ -388,7 +388,7 @@ def get_tts_wav(ref_wav_path, prompt_text, prompt_language, text, text_language,
         # 解决输入目标文本的空行导致报错的问题
         if (len(text.strip()) == 0):
             continue
-        if (text[-1] not in splits): text += "。" if text_language != "en" else "."
+        if (text[-1] not in splits): text += "。" if text_language != "en" or text_language != "br" else "."
         print(i18n("实际输入的目标文本(每句):"), text)
         phones2,bert2,norm_text2=get_phones_and_bert(text, text_language)
         print(i18n("前端处理后的文本(每句):"), norm_text2)
