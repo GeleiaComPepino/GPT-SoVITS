@@ -330,10 +330,10 @@ def get_tts_wav(ref_wav_path, prompt_text, prompt_language, text, text_language,
     text_language = dict_language[text_language]
     if not ref_free:
         prompt_text = prompt_text.strip("\n")
-        if (prompt_text[-1] not in splits): prompt_text += "。" if prompt_language != "en" or prompt_language != "br" else "."
+        if (prompt_text[-1] not in splits): prompt_text += "。" if prompt_language != "en" or prompt_language != "br" or prompt_language != "pt" else "."
         print(i18n("实际输入的参考文本:"), prompt_text)
     text = text.strip("\n")
-    if (text[0] not in splits and len(get_first(text)) < 4): text = "。" + text if text_language != "en" or text_language != "br" else "." + text
+    if (text[0] not in splits and len(get_first(text)) < 4): text = "。" + text if text_language != "en" or text_language != "br" or text_language != "pt" else "." + text
     
     print(i18n("实际输入的目标文本:"), text)
     zero_wav = np.zeros(
@@ -365,16 +365,22 @@ def get_tts_wav(ref_wav_path, prompt_text, prompt_language, text, text_language,
 
     if (how_to_cut == i18n("凑四句一切")):
         text = cut1(text)
+        print(text)
     elif (how_to_cut == i18n("凑50字一切")):
         text = cut2(text)
+        print(text)
     elif (how_to_cut == i18n("按中文句号。切")):
         text = cut3(text)
+        print(text)
     elif (how_to_cut == i18n("按英文句号.切")):
         text = cut4(text)
+        print(text)
     elif (how_to_cut == i18n("按标点符号切")):
         text = cut5(text)
+        print(text)
     elif (how_to_cut == i18n("葡萄牙人")):
         text = cut5(text)
+        print(text)
     while "\n\n" in text:
         text = text.replace("\n\n", "\n")
     print(i18n("实际输入的目标文本(切句后):"), text)
@@ -382,13 +388,15 @@ def get_tts_wav(ref_wav_path, prompt_text, prompt_language, text, text_language,
     texts = merge_short_text_in_array(texts, 5)
     audio_opt = []
     if not ref_free:
+        print(prompt_text)
+        print(prompt_language)
         phones1,bert1,norm_text1=get_phones_and_bert(prompt_text, prompt_language)
 
     for text in texts:
         # 解决输入目标文本的空行导致报错的问题
         if (len(text.strip()) == 0):
             continue
-        if (text[-1] not in splits): text += "。" if text_language != "en" or text_language != "br" else "."
+        if (text[-1] not in splits): text += "。" if text_language != "en" or text_language != "br" or text_language != "pt" else "."
         print(i18n("实际输入的目标文本(每句):"), text)
         phones2,bert2,norm_text2=get_phones_and_bert(text, text_language)
         print(i18n("前端处理后的文本(每句):"), norm_text2)
@@ -599,7 +607,7 @@ with gr.Blocks(title="GPT-SoVITS WebUI") as app:
             )
             how_to_cut = gr.Radio(
                 label=i18n("怎么切"),
-                choices=[i18n("不切"), i18n("凑四句一切"), i18n("凑50字一切"), i18n("按中文句号。切"), i18n("按英文句号.切"), i18n("按标点符号切"),],
+                choices=[i18n("不切"), i18n("凑四句一切"), i18n("凑50字一切"), i18n("按中文句号。切"), i18n("按英文句号.切"), i18n("按标点符号切"), i18n("葡萄牙人")],
                 value=i18n("凑四句一切"),
                 interactive=True,
             )
