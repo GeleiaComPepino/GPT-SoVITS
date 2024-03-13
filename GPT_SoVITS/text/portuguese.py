@@ -23,4 +23,4 @@ def g2p(text):
             textResult.append(letter)
     return textResult
 if __name__ == "__main__":
-    print(g2p('abandone o sexo'))
+    print(g2p('teste infantaria'))
