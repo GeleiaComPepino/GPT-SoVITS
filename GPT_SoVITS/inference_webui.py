@@ -330,7 +330,7 @@ def get_tts_wav(ref_wav_path, prompt_text, prompt_language, text, text_language,
     text_language = dict_language[text_language]
     if not ref_free:
         prompt_text = prompt_text.strip("\n")
-        if (prompt_text[-1] not in splits): prompt_text += "。" if prompt_language != "en" or text_language != "br" else "."
+        if (prompt_text[-1] not in splits): prompt_text += "。" if prompt_language != "en" or prompt_language != "br" else "."
         print(i18n("实际输入的参考文本:"), prompt_text)
     text = text.strip("\n")
     if (text[0] not in splits and len(get_first(text)) < 4): text = "。" + text if text_language != "en" or text_language != "br" else "." + text
@@ -405,6 +405,13 @@ def get_tts_wav(ref_wav_path, prompt_text, prompt_language, text, text_language,
         t2 = ttime()
         with torch.no_grad():
             # pred_semantic = t2s_model.model.infer(
+            print(all_phoneme_ids)
+            print(all_phoneme_len)
+            print(bert)
+            print(top_k)
+            print(top_p)
+            print(temperature)
+            print(hz * max_sec)
             pred_semantic, idx = t2s_model.model.infer_panel(
                 all_phoneme_ids,
                 all_phoneme_len,
