@@ -794,14 +794,14 @@ with gr.Blocks(title="GPT-SoVITS WebUI") as app:
                 gr.Markdown(value=i18n("1Aa-文本内容"))
                 with gr.Row():
                     gpu_numbers1a = gr.Textbox(label=i18n("GPU卡号以-分割，每个卡号一个进程"),value="%s-%s"%(gpus,gpus),interactive=True)
-                    bert_pretrained_dir = gr.Textbox(label=i18n("预训练的中文BERT模型路径"),value="GPT_SoVITS/pretrained_models/chinese-roberta-wwm-ext-large",interactive=False)
+                    bert_pretrained_dir = gr.Textbox(label=i18n("预训练的中文BERT模型路径"),value="GPT_SoVITS/pretrained_models/bert-base-portuguese-cased",interactive=False)
                     button1a_open = gr.Button(i18n("开启文本获取"), variant="primary",visible=True)
                     button1a_close = gr.Button(i18n("终止文本获取进程"), variant="primary",visible=False)
                     info1a=gr.Textbox(label=i18n("文本进程输出信息"))
                 gr.Markdown(value=i18n("1Ab-SSL自监督特征提取"))
                 with gr.Row():
                     gpu_numbers1Ba = gr.Textbox(label=i18n("GPU卡号以-分割，每个卡号一个进程"),value="%s-%s"%(gpus,gpus),interactive=True)
-                    cnhubert_base_dir = gr.Textbox(label=i18n("预训练的SSL模型路径"),value="GPT_SoVITS/pretrained_models/chinese-hubert-base",interactive=False)
+                    cnhubert_base_dir = gr.Textbox(label=i18n("预训练的SSL模型路径"),value="GPT_SoVITS/pretrained_models/wav2vec2-large-xlsr-open-brazilian-portuguese",interactive=False)
                     button1b_open = gr.Button(i18n("开启SSL提取"), variant="primary",visible=True)
                     button1b_close = gr.Button(i18n("终止SSL提取进程"), variant="primary",visible=False)
                     info1b=gr.Textbox(label=i18n("SSL进程输出信息"))

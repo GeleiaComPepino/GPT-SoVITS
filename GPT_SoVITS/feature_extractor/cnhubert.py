@@ -9,8 +9,8 @@ import logging
 logging.getLogger("numba").setLevel(logging.WARNING)
 
 from transformers import (
-    Wav2Vec2FeatureExtractor,
-    HubertModel,
+    Wav2Vec2ForCTC,
+    Wav2Vec2Processor,
 )
 
 import utils
@@ -22,8 +22,8 @@ cnhubert_base_path = None
 class CNHubert(nn.Module):
     def __init__(self):
         super().__init__()
-        self.model = HubertModel.from_pretrained(cnhubert_base_path)
-        self.feature_extractor = Wav2Vec2FeatureExtractor.from_pretrained(
+        self.model = Wav2Vec2ForCTC.from_pretrained(cnhubert_base_path)
+        self.feature_extractor = Wav2Vec2Processor.from_pretrained(
             cnhubert_base_path
         )
 
