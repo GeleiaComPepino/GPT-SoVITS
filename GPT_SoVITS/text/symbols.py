@@ -395,8 +395,9 @@ arpa = {
     "SH",
 }
 IPABr = ['ɐ', 'a', 'a', 'a', 'ɐ', '̃', 'b', 'k', 's', 'd', 'ɛ', 'e', 'e', 'f', 'ɡ', 'i', 'i', 'ʒ', 'k', 'l', 'm', 
-         'n', 'o', 'w', 'ɔ', 'o', 'õ', 'p', 'k', 'ɾ', 's', 't', 'u', 'u', 'ü', 'v', 'w', 'k', 's', 'j', 'ʒ']
+         'n', 'o', 'w', 'ɔ', 'o', 'õ', 'p', 'k', 'ɾ', 's', 't', 'u', 'u', 'ü', 'v', 'w', 'k', 's', 'j', 'ʒ', '55']
 symbols = [pad] + c + v + ja_symbols + pu_symbols + list(arpa) + IPABr
 symbols = sorted(set(symbols))
+print(symbols)
 if __name__ == "__main__":
     print(len(symbols))

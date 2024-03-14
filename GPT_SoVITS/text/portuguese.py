@@ -15,7 +15,7 @@ def g2p(word):
     epi = epitran.Epitran('por-Latn')  # Portuguese Latin script
     ipa_transcription = epi.transliterate(word)
     # Remove spaces from the IPA transcription
-    ipa_transcription = [char for char in ipa_transcription if char != ' ']
+    ipa_transcription = [char for char in ipa_transcription if char != ' ' and char != '.' and char != '̃' and char != ',' and char != '?']
     return ipa_transcription
 if __name__ == "__main__":
     print(g2p("aáàâãbcçdeéêfghiíjklmnoóôõpqrstuúüvwxyz"))
