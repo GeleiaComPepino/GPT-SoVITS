@@ -112,6 +112,9 @@ if os.path.exists(txt_path) == False:
         "EN": "en",
         "en": "en",
         "En": "en",
+        "Pt": "pt",
+        "PT": "pt",
+        "pt": "pt"
     }
     for line in lines[int(i_part) :: int(all_parts)]:
         try:

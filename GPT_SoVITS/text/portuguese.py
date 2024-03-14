@@ -72,14 +72,17 @@ arpa_to_portuguese = {
     "SH": "ch",   # similar to the 'ch' in "chave" (key)
     "K": "c"
 }
+def text_normalize(text):
+    # todo: eng text normalize
+    return text.replace(";", ",")
 arpa_to_portuguese_inverted = {value: key for key, value in arpa_to_portuguese.items()}
 def g2p(word):
     translated_word = []
     for phoneme in word:
-        print(phoneme)
-        character = arpa_to_portuguese_inverted.get(phoneme, "")
-        if character == '':
-            translated_word.append(phoneme.upper())
-        else:
-            translated_word.append(character)
+        if phoneme.lower() not in [' ', '.', ',']:
+            character = arpa_to_portuguese_inverted.get(phoneme.lower(), "")
+            if character == '':
+                pass
+            else:
+                translated_word.append(character)
     return translated_word
