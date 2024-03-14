@@ -437,7 +437,7 @@ IPABr = {
     'j',
     'ʒ'
     }
-symbols = [pad] + c + v + ja_symbols + pu_symbols + list(arpa) + list(IPABr)
+symbols = [pad] + c + v + ja_symbols + pu_symbols + list(arpa) #+ list(IPABr)
 symbols = sorted(set(symbols))
 print(symbols)
 if __name__ == "__main__":
