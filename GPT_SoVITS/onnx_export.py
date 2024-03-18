@@ -6,7 +6,7 @@ from torch import nn
 from feature_extractor import cnhubert
 cnhubert_base_path = "pretrained_models/chinese-hubert-base"
 cnhubert.cnhubert_base_path=cnhubert_base_path
-ssl_model = cnhubert.get_model()
+ssl_model = cnhubert.get_model_cnw2v2base()
 from text import cleaned_text_to_sequence
 import soundfile
 from my_utils import load_audio

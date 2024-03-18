@@ -54,7 +54,7 @@ if torch.cuda.is_available():
 #     device = "mps"
 else:
     device = "cpu"
-model=cnhubert.get_model()
+model=cnhubert.get_model_cnw2v2base()
 # is_half=False
 if(is_half==True):
     model=model.half().to(device)
