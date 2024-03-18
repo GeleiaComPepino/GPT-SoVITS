@@ -13,3 +13,4 @@ TEMP
 search.bat
 *.ckpt
 *.pth
+*.wav
