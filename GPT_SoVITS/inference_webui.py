@@ -130,7 +130,7 @@ class DictToAttrRecursive(dict):
             raise AttributeError(f"Attribute {item} not found")
 
 
-ssl_model = cnhubert.get_model_cnw2v2base()
+ssl_model = cnhubert.get_model()
 if is_half == True:
     ssl_model = ssl_model.half().to(device)
 else:

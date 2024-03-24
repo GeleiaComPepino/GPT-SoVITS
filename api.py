@@ -302,7 +302,7 @@ hps = DictToAttrRecursive(hps)
 hps.model.semantic_frame_rate = "25hz"
 dict_s1 = torch.load(gpt_path, map_location="cpu")
 config = dict_s1["config"]
-ssl_model = cnhubert.get_model_cnw2v2base()
+ssl_model = cnhubert.get_model()
 if is_half:
     ssl_model = ssl_model.half().to(device)
 else:

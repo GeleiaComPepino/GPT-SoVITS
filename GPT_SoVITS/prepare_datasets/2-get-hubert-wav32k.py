@@ -54,7 +54,7 @@ if torch.cuda.is_available():
 #     device = "mps"
 else:
     device = "cpu"
-model=cnhubert.get_model_cnw2v2base()
+model=cnhubert.get_model()
 # is_half=False
 if(is_half==True):
     model=model.half().to(device)
@@ -80,7 +80,7 @@ def name2go(wav_name,wav_path):
         tensor_wav16=tensor_wav16.half().to(device)
     else:
         tensor_wav16 = tensor_wav16.to(device)
-    ssl = model.feature_extractor(tensor_wav16.unsqueeze(0)).transpose(1, 2).cpu()#torch.Size([1, 768, 215])
+    ssl=model.model(tensor_wav16.unsqueeze(0))["last_hidden_state"].transpose(1,2).cpu()#torch.Size([1, 768, 215])
     if np.isnan(ssl.detach().numpy()).sum()!= 0:
         nan_fails.append(wav_name)
         print("nan filtered:%s"%wav_name)
