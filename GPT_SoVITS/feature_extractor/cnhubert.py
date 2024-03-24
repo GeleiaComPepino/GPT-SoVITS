@@ -64,10 +64,10 @@ class CNHubert(nn.Module):
         #return feats
 
 
-# def get_model():
-#     model = CNHubert()
-#     model.eval()
-#     return model
+def get_model():
+    model = CNHubert()
+    model.eval()
+    return model
 
 
 # def get_large_model():
